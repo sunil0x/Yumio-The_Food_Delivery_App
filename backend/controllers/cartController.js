@@ -6,13 +6,18 @@ import pool from '../config/db.js';
 const addToCart = async (req, res) => {
     try {
         // Find user by ID and get their cart data
-        const userResult = await pool.query('SELECT cartData FROM users WHERE id = $1', [req.body.userId]);
+        const userResult = await pool.query('SELECT "cartData" FROM users WHERE id = $1', [req.body.userId]);
 
         if (userResult.rows.length === 0) {
             return res.json({ success: false, message: "User not found" });
         }
 
-        let cartData = userResult.rows[0].cartdata || {}; // Get existing cart data
+        let cartData = userResult.rows[0].cartData || {}; // Get existing cart data
+        
+        // Parse cartData if it's a string
+        if (typeof cartData === 'string') {
+            cartData = JSON.parse(cartData);
+        }
         
         if (!cartData[req.body.itemId]) {  // If item is not already in cart
             cartData[req.body.itemId] = 1; // Add item with quantity 1
@@ -21,7 +26,7 @@ const addToCart = async (req, res) => {
         }
 
         // Update user cart data in database
-        await pool.query('UPDATE users SET cartData = $1 WHERE id = $2', [JSON.stringify(cartData), req.body.userId]);
+        await pool.query('UPDATE users SET "cartData" = $1 WHERE id = $2', [JSON.stringify(cartData), req.body.userId]);
         
         res.json({ success: true, message: "Item added to cart" });
     } catch (error) {
@@ -34,20 +39,25 @@ const addToCart = async (req, res) => {
 const removeFromCart = async (req, res) => {
     try {
         // Find user by ID and get their cart data
-        const userResult = await pool.query('SELECT cartData FROM users WHERE id = $1', [req.body.userId]);
+        const userResult = await pool.query('SELECT "cartData" FROM users WHERE id = $1', [req.body.userId]);
 
         if (userResult.rows.length === 0) {
             return res.json({ success: false, message: "User not found" });
         }
 
-        let cartData = userResult.rows[0].cartdata || {}; // Get existing cart data
+        let cartData = userResult.rows[0].cartData || {}; // Get existing cart data
+
+        // Parse cartData if it's a string
+        if (typeof cartData === 'string') {
+            cartData = JSON.parse(cartData);
+        }
 
         if (cartData[req.body.itemId] > 0) { // If item quantity is greater than 0
             cartData[req.body.itemId] -= 1; // Decrement item quantity by 1
         }
 
         // Update user cart data in database
-        await pool.query('UPDATE users SET cartData = $1 WHERE id = $2', [JSON.stringify(cartData), req.body.userId]);
+        await pool.query('UPDATE users SET "cartData" = $1 WHERE id = $2', [JSON.stringify(cartData), req.body.userId]);
         
         res.json({ success: true, message: "Item removed from cart" });
     } catch (error) {
@@ -60,13 +70,18 @@ const removeFromCart = async (req, res) => {
 const getCart = async (req, res) => {
     try {
         // Find user by ID and get their cart data
-        const userResult = await pool.query('SELECT cartData FROM users WHERE id = $1', [req.body.userId]);
+        const userResult = await pool.query('SELECT "cartData" FROM users WHERE id = $1', [req.body.userId]);
 
         if (userResult.rows.length === 0) {
             return res.json({ success: false, message: "User not found" });
         }
 
-        let cartData = userResult.rows[0].cartdata || {}; // Get user cart data
+        let cartData = userResult.rows[0].cartData || {}; // Get user cart data
+        
+        // Parse cartData if it's a string
+        if (typeof cartData === 'string') {
+            cartData = JSON.parse(cartData);
+        }
         
         res.json({ success: true, cartData });
     } catch (error) {

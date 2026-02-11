@@ -20,24 +20,41 @@ const StoreContextProvider = (props) => {
             setCartItems((prev)=> ({...prev, [itemId]:prev[itemId]+1}));
         }
         if (token) {
-            await axios.post(url + "/api/cart/add",{itemId},{headers:{token}})
+            try {
+                await axios.post(url + "/api/cart/add",{itemId},{headers:{token}})
+            } catch (error) {
+                console.error("Error adding to cart:", error);
+            }
         }
     }
 
     const removeFromCart = async (itemId) => {
-        setCartItems((prev) => ({...prev, [itemId]:prev[itemId]-1}));
+        setCartItems((prev) => {
+            const newCart = {...prev};
+            if (newCart[itemId] > 1) {
+                newCart[itemId] -= 1;
+            } else {
+                delete newCart[itemId];
+            }
+            return newCart;
+        });
         if (token) {
-            await axios.post(url + "/api/cart/remove",{itemId},{headers:{token}})
+            try {
+                await axios.post(url + "/api/cart/remove",{itemId},{headers:{token}})
+            } catch (error) {
+                console.error("Error removing from cart:", error);
+            }
         }
     }
 
     const getTotalCartAmount = ()=> {
         let totalAmount = 0;
+        if (!cartItems || !food_list) return 0;
         for (const item in cartItems) {
             if(cartItems[item] > 0) {
                 let itemInfo = food_list.find((product) => product.id == item); /* Find item details from food_list */
                 if (itemInfo) {
-                    totalAmount += itemInfo.price * cartItems[item];
+                    totalAmount += Number(itemInfo.price) * cartItems[item];
                 }
             }
         }
