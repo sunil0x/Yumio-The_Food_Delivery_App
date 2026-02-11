@@ -6,7 +6,7 @@ import pool from '../config/db.js';
 const addToCart = async (req, res) => {
     try {
         // Find user by ID and get their cart data
-        const userResult = await pool.query('SELECT "cartData" FROM users WHERE id = $1', [req.body.userId]);
+        const userResult = await pool.query('SELECT cartdata FROM users WHERE id = $1', [req.body.userId]);
 
         if (userResult.rows.length === 0) {
             return res.json({ success: false, message: "User not found" });
@@ -26,7 +26,7 @@ const addToCart = async (req, res) => {
         }
 
         // Update user cart data in database (use JSONB type - pass object directly)
-        await pool.query('UPDATE users SET "cartData" = $1::jsonb WHERE id = $2', [JSON.stringify(cartData), req.body.userId]);
+        await pool.query('UPDATE users SET cartdata = $1::jsonb WHERE id = $2', [JSON.stringify(cartData), req.body.userId]);
         
         res.json({ success: true, message: "Item added to cart" });
     } catch (error) {
@@ -39,7 +39,7 @@ const addToCart = async (req, res) => {
 const removeFromCart = async (req, res) => {
     try {
         // Find user by ID and get their cart data
-        const userResult = await pool.query('SELECT "cartData" FROM users WHERE id = $1', [req.body.userId]);
+        const userResult = await pool.query('SELECT cartdata FROM users WHERE id = $1', [req.body.userId]);
 
         if (userResult.rows.length === 0) {
             return res.json({ success: false, message: "User not found" });
@@ -57,7 +57,7 @@ const removeFromCart = async (req, res) => {
         }
 
         // Update user cart data in database (use JSONB type - pass object directly)
-        await pool.query('UPDATE users SET "cartData" = $1::jsonb WHERE id = $2', [JSON.stringify(cartData), req.body.userId]);
+        await pool.query('UPDATE users SET cartdata = $1::jsonb WHERE id = $2', [JSON.stringify(cartData), req.body.userId]);
         
         res.json({ success: true, message: "Item removed from cart" });
     } catch (error) {
@@ -70,7 +70,7 @@ const removeFromCart = async (req, res) => {
 const getCart = async (req, res) => {
     try {
         // Find user by ID and get their cart data
-        const userResult = await pool.query('SELECT "cartData" FROM users WHERE id = $1', [req.body.userId]);
+        const userResult = await pool.query('SELECT cartdata FROM users WHERE id = $1', [req.body.userId]);
 
         if (userResult.rows.length === 0) {
             return res.json({ success: false, message: "User not found" });

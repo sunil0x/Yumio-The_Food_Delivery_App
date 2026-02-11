@@ -65,7 +65,7 @@ const registerUser = async (req, res) => {
 
         // Creating new user with raw SQL INSERT
         const result = await pool.query(
-            'INSERT INTO users (name, email, password, "cartData") VALUES ($1, $2, $3, $4::jsonb) RETURNING id',
+            'INSERT INTO users (name, email, password, cartdata) VALUES ($1, $2, $3, $4::jsonb) RETURNING id',
             [name, email, hashedPassword, JSON.stringify({})]
         );
 
