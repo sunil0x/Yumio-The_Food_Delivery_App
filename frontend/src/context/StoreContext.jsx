@@ -10,15 +10,18 @@ const StoreContextProvider = (props) => {
     const [cartItems, setCartItems] = useState({});
     const url = "http://localhost:4000";
     const [token,setToken] = useState("");
-    const [food_list,setFoodList] = useState([])
+    const [food_list,setFoodList] = useState([]);
 
     const addToCart = async (itemId) => {
-        if (!cartItems[itemId]) {  /* If item is not already in cart */
-            setCartItems((prev) => ({...prev, [itemId]:1}));
-        }
-        else {  /* If item is already in cart */
-            setCartItems((prev)=> ({...prev, [itemId]:prev[itemId]+1}));
-        }
+        setCartItems((prev) => {
+            const currentCart = prev || {}; /* Ensure cart is not undefined */
+            if (!currentCart[itemId]) {  /* If item is not already in cart */
+                return {...currentCart, [itemId]:1};
+            } else {  /* If item is already in cart */
+                return {...currentCart, [itemId]:currentCart[itemId]+1};
+            }
+        });
+        
         if (token) {
             try {
                 await axios.post(url + "/api/cart/add",{itemId},{headers:{token}})
@@ -30,7 +33,8 @@ const StoreContextProvider = (props) => {
 
     const removeFromCart = async (itemId) => {
         setCartItems((prev) => {
-            const newCart = {...prev};
+            const currentCart = prev || {}; /* Ensure cart is not undefined */
+            const newCart = {...currentCart};
             if (newCart[itemId] > 1) {
                 newCart[itemId] -= 1;
             } else {
@@ -38,6 +42,7 @@ const StoreContextProvider = (props) => {
             }
             return newCart;
         });
+        
         if (token) {
             try {
                 await axios.post(url + "/api/cart/remove",{itemId},{headers:{token}})
@@ -68,16 +73,28 @@ const StoreContextProvider = (props) => {
     }
 
     const loadCartData = async(token) => {
-        const response = await axios.post(url + "/api/cart/get",{},{headers:{token}})
-        setCartItems(response.data.cartData);
+        try {
+            const response = await axios.post(url + "/api/cart/get",{},{headers:{token}})
+            const dbCart = response.data.cartData || {};
+            setCartItems(dbCart);
+        } catch (error) {
+            console.error("Error loading cart data:", error);
+            setCartItems({});
+        }
     }
 
+    // Load cart and food list on mount
     useEffect(() => {
         async function loadData() {
             await fetchFoodList(); /* Fetch food list when component mounts */
-            if (localStorage.getItem("token")) {// if localStorage has token then set it in context, so that user remains logged in on page refresh
-              setToken(localStorage.getItem("token"));
-              await loadCartData(localStorage.getItem("token"));
+            const storedToken = localStorage.getItem("token");
+            if (storedToken) {
+                // User is logged in - load cart from database
+                setToken(storedToken);
+                await loadCartData(storedToken);
+            } else {
+                // User not logged in - start with empty cart
+                setCartItems({});
             }
         }
         loadData();

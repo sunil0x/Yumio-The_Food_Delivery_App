@@ -12,9 +12,9 @@ const addToCart = async (req, res) => {
             return res.json({ success: false, message: "User not found" });
         }
 
-        let cartData = userResult.rows[0].cartData || {}; // Get existing cart data
+        let cartData = userResult.rows[0].cartdata || {}; // Get existing cart data (lowercase from pg)
         
-        // Parse cartData if it's a string
+        // Ensure cartData is an object
         if (typeof cartData === 'string') {
             cartData = JSON.parse(cartData);
         }
@@ -25,8 +25,8 @@ const addToCart = async (req, res) => {
             cartData[req.body.itemId] += 1; // Increment item quantity by 1
         }
 
-        // Update user cart data in database
-        await pool.query('UPDATE users SET "cartData" = $1 WHERE id = $2', [JSON.stringify(cartData), req.body.userId]);
+        // Update user cart data in database (use JSONB type - pass object directly)
+        await pool.query('UPDATE users SET "cartData" = $1::jsonb WHERE id = $2', [JSON.stringify(cartData), req.body.userId]);
         
         res.json({ success: true, message: "Item added to cart" });
     } catch (error) {
@@ -45,9 +45,9 @@ const removeFromCart = async (req, res) => {
             return res.json({ success: false, message: "User not found" });
         }
 
-        let cartData = userResult.rows[0].cartData || {}; // Get existing cart data
+        let cartData = userResult.rows[0].cartdata || {}; // Get existing cart data (lowercase from pg)
 
-        // Parse cartData if it's a string
+        // Ensure cartData is an object
         if (typeof cartData === 'string') {
             cartData = JSON.parse(cartData);
         }
@@ -56,8 +56,8 @@ const removeFromCart = async (req, res) => {
             cartData[req.body.itemId] -= 1; // Decrement item quantity by 1
         }
 
-        // Update user cart data in database
-        await pool.query('UPDATE users SET "cartData" = $1 WHERE id = $2', [JSON.stringify(cartData), req.body.userId]);
+        // Update user cart data in database (use JSONB type - pass object directly)
+        await pool.query('UPDATE users SET "cartData" = $1::jsonb WHERE id = $2', [JSON.stringify(cartData), req.body.userId]);
         
         res.json({ success: true, message: "Item removed from cart" });
     } catch (error) {
@@ -76,9 +76,9 @@ const getCart = async (req, res) => {
             return res.json({ success: false, message: "User not found" });
         }
 
-        let cartData = userResult.rows[0].cartData || {}; // Get user cart data
+        let cartData = userResult.rows[0].cartdata || {}; // Get user cart data (lowercase from pg)
         
-        // Parse cartData if it's a string
+        // Ensure cartData is an object
         if (typeof cartData === 'string') {
             cartData = JSON.parse(cartData);
         }

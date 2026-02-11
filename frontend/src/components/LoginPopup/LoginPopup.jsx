@@ -8,7 +8,7 @@ import axios from 'axios'
 
 const LoginPopup = ({setShowLogin}) => {
 
-  const {url,setToken} = useContext(StoreContext);
+  const {url,setToken,setCartItems} = useContext(StoreContext);
 
   const [currState,setCurrState] = useState("Login")
   const [data,setData] = useState({
@@ -38,6 +38,17 @@ const LoginPopup = ({setShowLogin}) => {
     if (response.data.success) {
       setToken(response.data.token); // setting token in context
       localStorage.setItem("token",response.data.token); // storing token in local storage
+      
+      // Load user's cart from database after login
+      try {
+        const cartResponse = await axios.post(url + "/api/cart/get", {}, {headers: {token: response.data.token}});
+        if (cartResponse.data.success) {
+          setCartItems(cartResponse.data.cartData || {});
+        }
+      } catch (error) {
+        console.error("Error loading cart after login:", error);
+      }
+      
       setShowLogin(false); // closing login popup / keeping it hidden
     } else {
       alert(response.data.message); // showing error message

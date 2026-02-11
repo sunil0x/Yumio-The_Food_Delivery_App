@@ -22,7 +22,7 @@ const placeOrder = async (req, res) => {
         const orderId = orderResult.rows[0].id;
 
         // Clear user's cart
-        await pool.query('UPDATE users SET cartData = $1 WHERE id = $2', [JSON.stringify({}), userId]);
+        await pool.query('UPDATE users SET "cartData" = $1::jsonb WHERE id = $2', [JSON.stringify({}), userId]);
 
         // Prepare line items for Stripe
         const line_items = req.body.items.map((item) => ({
