@@ -1,13 +1,16 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import './FoodItem.css'
 import { assets } from '../../assets/assets'
 import { StoreContext } from '../../context/StoreContext';
+import RecipeModal from '../RecipeModal/RecipeModal';
 
-const FoodItem = ({id,name,price,description,image}) => {
+const FoodItem = ({id,name,price,description,image,recipe}) => {
 
     const {cartItems, addToCart, removeFromCart,url} = useContext(StoreContext); /* Accessing cartItems and functions from StoreContext, used to access shared datak  */
+    const [showRecipe, setShowRecipe] = useState(false);
 
   return (
+    <>
     <div className="food-item">
         <div className="food-item-img-container">
             <img className="food-item-image" src={url+"/images/"+image} alt="" />
@@ -27,8 +30,13 @@ const FoodItem = ({id,name,price,description,image}) => {
             </div>
             <p className="food-item-desc">{description}</p>
             <p className="food-item-price">${price}</p>
+            <button className="recipe-btn" onClick={() => setShowRecipe(true)}>
+                👨‍🍳 View Recipe
+            </button>
         </div>
     </div>
+    {showRecipe && <RecipeModal foodName={name} recipeSteps={recipe} onClose={() => setShowRecipe(false)} />}
+    </>
   )
 }
 

@@ -7,11 +7,12 @@ import fs from 'fs';
 // add food item
 const addFood = async (req, res) => {
     let image_filename = `${req.file.filename}`; // getting filename from multer
+    let recipeSteps = req.body.recipe ? JSON.parse(req.body.recipe) : []; // parse recipe steps if provided
 
     try {
         await pool.query(
-            'INSERT INTO food (name, description, price, image, category) VALUES ($1, $2, $3, $4, $5)',
-            [req.body.name, req.body.description, req.body.price, image_filename, req.body.category]
+            'INSERT INTO food (name, description, price, image, category, recipe) VALUES ($1, $2, $3, $4, $5, $6::jsonb)',
+            [req.body.name, req.body.description, req.body.price, image_filename, req.body.category, JSON.stringify(recipeSteps)]
         );
         res.json({ success: true, message: "Food Item Added Successfully" });
     } catch (error) {

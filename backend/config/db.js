@@ -51,6 +51,7 @@ export const connectDB = async () => {
                 price DECIMAL(10, 2) NOT NULL,
                 image VARCHAR(255) NOT NULL,  -- stores image's URL(filepath) which is fetched from backend's uploads/ directory
                 category VARCHAR(255) NOT NULL,
+                recipe JSONB DEFAULT '{"steps": []}',  -- stores recipe steps as JSON array
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         `);

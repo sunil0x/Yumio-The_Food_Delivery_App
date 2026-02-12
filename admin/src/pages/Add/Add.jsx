@@ -13,6 +13,7 @@ const Add = ({url}) => {
     price: "",
     category: "Salad",
   });
+  const [recipe, setRecipe] = useState(""); // Store recipe as string, user enters one step per line
 
   const onChangeHandler = (event) => {
     const name = event.target.name;
@@ -22,12 +23,17 @@ const Add = ({url}) => {
 
   const onSubmitHandler = async (event) => {
     event.preventDefault(); /* Prevents page reload on form submit */
+    
+    // Convert recipe string to array (split by newlines and remove empty lines)
+    const recipeSteps = recipe.split('\n').filter(step => step.trim().length > 0);
+    
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("description", data.description);
     formData.append("price", Number(data.price));
     formData.append("category", data.category);
     formData.append("image", image);
+    formData.append("recipe", JSON.stringify(recipeSteps)); // Append recipe as JSON string
 
     /* Make API call to backend */
     /* ${url}/api/food/add is the endpoint to upload food item */
@@ -41,6 +47,7 @@ const Add = ({url}) => {
           price: "",
           category: "Salad"
         })
+        setRecipe(""); /* Reset recipe */
         setImage(false) /* Reset image preview */
         toast.success(response.data.message); /* Show success message */
     } else {
@@ -90,6 +97,16 @@ const Add = ({url}) => {
             rows="6"
             placeholder="Write content here"
             required
+          ></textarea>
+        </div>
+
+        <div className="add-product-recipe flex-col">
+          <p>Recipe Steps (Enter one step per line)</p>
+          <textarea
+            onChange={(e) => setRecipe(e.target.value)}
+            value={recipe}
+            rows="6"
+            placeholder="Step 1&#10;Step 2&#10;Step 3&#10;..."
           ></textarea>
         </div>
 

@@ -44,6 +44,31 @@
     margin: 10px 0px;
 }
 
+.recipe-btn {
+    width: 100%;
+    background-color: #fff0ed;
+    border: 2px solid tomato;
+    color: tomato;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 8px;
+}
+
+.recipe-btn:hover {
+    background-color: tomato;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0px 5px 15px rgba(255, 99, 71, 0.3);
+}
+
+.recipe-btn:active {
+    transform: translateY(0);
+}
+
 .food-item-img-container {
     position: relative;
 }
