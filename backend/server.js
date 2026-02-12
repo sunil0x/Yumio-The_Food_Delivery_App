@@ -13,7 +13,7 @@ import orderRouter from './routes/orderRoute.js'
 
 // app configuration
 const app = express()  
-const port = 4000 //port number
+const port = process.env.PORT || 4000 //port number
 
 // middlewares
 app.use(express.json()) // to parse JSON data

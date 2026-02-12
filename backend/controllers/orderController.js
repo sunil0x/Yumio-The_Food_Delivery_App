@@ -1,4 +1,5 @@
 // Order controller with PostgreSQL raw SQL queries
+// this file is used to handle order related operations such as placing orders, verifying orders, fetching user orders and listing all orders for admin panel
 
 import pool from "../config/db.js";
 import Stripe from "stripe";

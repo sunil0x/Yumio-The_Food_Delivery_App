@@ -1,4 +1,5 @@
 // Food controller with PostgreSQL raw SQL queries
+// this file is used to handle food related operations such as adding food items, listing food items and removing food items
 
 import pool from "../config/db.js";
 import fs from 'fs';

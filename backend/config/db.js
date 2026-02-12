@@ -1,4 +1,5 @@
 // PostgreSQL connection configuration and table initialization
+// this file is used to set up the connection to the PostgreSQL database and initialize the required tables for the application (users, food, orders) if they do not already exist. It also exports the connection pool for use in other parts of the application.
 
 import pg from 'pg';
 const { Pool } = pg;

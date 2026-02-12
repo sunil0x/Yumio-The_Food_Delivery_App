@@ -1,4 +1,5 @@
 // User authentication controller with PostgreSQL raw SQL queries
+// this file is used to handle user authentication related operations such as login and registration
 
 import pool from "../config/db.js";
 import jwt from "jsonwebtoken";

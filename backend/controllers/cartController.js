@@ -1,4 +1,5 @@
 // Cart controller with PostgreSQL raw SQL queries
+// this file is used to handle cart related operations such as adding items to cart, removing items from cart and fetching user cart data
 
 import pool from '../config/db.js';
 
