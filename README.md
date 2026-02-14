@@ -1,10 +1,10 @@
 # YUMIO - Food Delivery Platform
 
-**A Full-Stack Web Application for Online Food Ordering and Delivery**
+**A Full-Stack Web Application for Online Food Ordering,Recipe Viewing and Delivery**
 
 ## Executive Summary
 
-Yumio is a comprehensive, production-ready food delivery platform built with modern web technologies. The application enables users to browse restaurants, order food items, make secure payments, and track their orders in real-time. The platform includes a customer-facing frontend application, an admin management panel, and a robust backend API. This project demonstrates enterprise-level software development practices including secure authentication, payment processing, database management, and cloud deployment.
+Yumio is a comprehensive, production-ready food delivery platform built with modern web technologies. The application enables users to order food items, see recipe (if we want to make ourself), make secure payments, and track their orders in real-time. The platform includes a customer-facing frontend application, an admin management panel, and a robust backend. This project demonstrates enterprise-level software development practices including secure authentication, payment processing, database management, and cloud deployment.
 
 ---
 
@@ -127,6 +127,11 @@ Customer                    Admin                      Backend                  
    |                      View Orders ---------> Fetch Orders ------------> Query -> PostgreSQL
    |                      Update Status -------> Update Order Status ----> Update -> PostgreSQL
 ```
+
+
+![flow_and_archi](https://github.com/user-attachments/assets/160935a1-1d0b-476d-bc23-55cec1a51f4c)
+
+
 
 ### Three-Tier Architecture
 
@@ -262,6 +267,23 @@ Customer                    Admin                      Backend                  
 - LoginPopup
 - Footer
 
+#### Few Screenshots:
+
+<img width="1694" height="806" alt="image" src="https://github.com/user-attachments/assets/79ec58a4-d5e9-4986-abc6-7ee1a988f06d" />
+----------------------------------------------------------------------------------------------------------------------------------
+<img width="1654" height="477" alt="image" src="https://github.com/user-attachments/assets/e126983c-a144-4098-9517-b37eda42d968" />
+----------------------------------------------------------------------------------------------------------------------------------
+<img width="1641" height="688" alt="image" src="https://github.com/user-attachments/assets/af135415-868e-4505-a53e-67e2ec17ab84" />
+----------------------------------------------------------------------------------------------------------------------------------
+<img width="1693" height="860" alt="image" src="https://github.com/user-attachments/assets/622f36aa-b43c-4b35-8bc5-7d5b79b43df2" />
+----------------------------------------------------------------------------------------------------------------------------------
+<img width="1741" height="809" alt="image" src="https://github.com/user-attachments/assets/08c8a0e3-4a52-4a11-ad4b-80a6c262201a" />
+----------------------------------------------------------------------------------------------------------------------------------
+<img width="1663" height="778" alt="image" src="https://github.com/user-attachments/assets/2cbb83ab-96d0-4e61-bd49-0717447b5157" />
+
+
+
+
 ### Admin Panel
 
 #### Key Pages:
@@ -296,6 +318,17 @@ Customer                    Admin                      Backend                  
 - Real-time data updates
 
 ---
+
+#### Few Screenshots:
+
+<img width="1800" height="855" alt="image" src="https://github.com/user-attachments/assets/b1c88c5b-6357-4e7b-a444-6c3c147c58c9" />
+----------------------------------------------------------------------------------------------------------------------------------
+<img width="1783" height="837" alt="image" src="https://github.com/user-attachments/assets/1b190196-05c1-4bf3-ae52-dc5e9afab752" />
+----------------------------------------------------------------------------------------------------------------------------------
+<img width="1748" height="858" alt="image" src="https://github.com/user-attachments/assets/0b89bac1-5fb6-453c-bd77-3e1ed60827fe" />
+
+
+
 
 ## Authentication & Security
 
@@ -399,6 +432,11 @@ PORT=10000 (Render sets this automatically)
 #### Overview
 
 Yumio integrates with Stripe to provide secure, PCI-compliant payment processing for online food orders.
+
+#### Screenshot:
+<img width="1327" height="969" alt="image" src="https://github.com/user-attachments/assets/4b77ff6a-f890-416a-873d-4115a1c0a45c" />
+
+
 
 #### Payment Flow
 
@@ -933,13 +971,13 @@ Response:
 ### Render Deployment Setup
 
 #### Frontend Deployment
-- **Service**: Static Site / Web Service
+- **Service**: Static Site 
 - **Build Command**: `npm run build`
 - **Start Command**: `npm run preview` (for static) or served via Render
 - **Environment**: Production Node environment
 
 #### Admin Panel Deployment
-- **Service**: Web Service
+- **Service**: Static Site
 - **Build Command**: `npm run build`
 - **Environment Variables**: Backend URL pointing to deployed API
 
@@ -956,7 +994,7 @@ Response:
 
 #### PostgreSQL Database
 - **Service**: Managed PostgreSQL on Render
-- **Plan**: Standard plan suitable for production
+- **Plan**: Free Plan
 - **Automatic SSL**: Enabled for secure connections
 - **Backups**: Regular automated backups
 
