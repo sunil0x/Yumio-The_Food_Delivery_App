@@ -37,15 +37,15 @@ Yumio addresses the growing demand for convenient online food delivery services.
 
 ### Live Deployment
 
-- **Frontend**: [https://yumio-frontend.onrender.com](https://yumio-frontend.onrender.com) (deployed on Render)
-- **Admin Panel**: [https://yumio-admin.onrender.com](https://yumio-admin.onrender.com) (deployed on Render)
-- **Backend API**: [https://yumio-backend-x187.onrender.com](https://yumio-backend-x187.onrender.com) (deployed on Render)
+- **Frontend**   : https://yumio-frontend-7qtx.onrender.com/ (deployed on Render)
+- **Admin Panel**: https://yumio-admin-wd3p.onrender.com/ (deployed on Render)
+- **Backend**    : https://yumio-backend-x187.onrender.com/ (deployed on Render)
 
 ### Project Duration
 
-- **Started**: 2025
-- **Conversion to PostgreSQL**: February 2026
-- **Deployment**: February 2026
+- **Started**: Dec 2025
+- **Conversion to PostgreSQL**: Feb 2026
+- **Deployment**: Feb 2026
 
 ---
 
@@ -103,7 +103,9 @@ Yumio addresses the growing demand for convenient online food delivery services.
 
 <!-- [INSERT SYSTEM ARCHITECTURE DIAGRAM HERE - Show Frontend, Admin Panel, Backend API, and Database with arrows showing data flow] -->
 
-![System Architecture](upload_architecture.png)
+![yumio-architecture](https://github.com/user-attachments/assets/176cbfe7-22d4-461f-ab17-73a87dcea2db)
+
+
 
 ### Application Flow
 
@@ -657,7 +659,7 @@ CREATE TABLE orders (
 
 ### Base URL
 
-**Production**: `https://yumio-backend-x187.onrender.com`
+**Production**: ` https://yumio-backend-x187.onrender.com/`
 
 ### User Authentication Endpoints
 
@@ -923,7 +925,10 @@ Response:
 
 <!-- [INSERT DEPLOYMENT DIAGRAM - Show three services on Render with GitHub integration] -->
 
-![Deployment Architecture](upload_deployment.png)
+
+![yumio-deployment](https://github.com/user-attachments/assets/3e194659-3bf7-4bdd-b210-b9d5f64c00ee)
+
+
 
 ### Render Deployment Setup
 
@@ -1289,12 +1294,14 @@ Yumio-PostgreSQL/
 
 ## Contact & Support
 
-- **GitHub Repository**: [https://github.com/yourusername/Yumio-PostgreSQL](https://github.com/yourusername/Yumio-PostgreSQL)
-- **Live Website**: [https://yumio-frontend.onrender.com](https://yumio-frontend.onrender.com)
+- **GitHub Repository**: https://github.com/Shishir-129/Yumio-The_Food_Delivery_App
+- **Live Website frontend**: https://yumio-frontend-7qtx.onrender.com/
+- **Live Website admin-panel**: https://yumio-admin-wd3p.onrender.com/
+- **Live Website backend**: https://yumio-backend-x187.onrender.com/
 - **Issues & Bug Reports**: Open an issue on GitHub
 
 ---
 
-**Last Updated**: February 13, 2026  
+**Last Updated**: February, 2026  
 **Version**: 2.0 (PostgreSQL Migration Complete)  
 **Status**: Production Ready ✅
