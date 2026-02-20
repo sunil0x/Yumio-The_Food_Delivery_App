@@ -27,6 +27,10 @@ dist-ssr
 # Environment variables
 .env
 
+# Local uploads folder (using Cloudinary instead)
+backend/uploads/
+uploads/
+
 
 # Editor directories and files
 .vscode/*
