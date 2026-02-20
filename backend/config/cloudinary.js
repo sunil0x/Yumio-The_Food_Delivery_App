@@ -12,7 +12,7 @@ cloudinary.config({
 });
 
 // Configure Multer Storage
-const storage = new multerStorageCloudinary.CloudinaryStorage({
+const storage = new multerStorageCloudinary({
     cloudinary: cloudinary,
     params: {
         folder: 'yumio-food-items',
